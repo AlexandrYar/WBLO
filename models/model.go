@@ -1,12 +1,12 @@
-package Model
+package model
 
 type ModelDb struct {
 	Host     string
 	Port     string
 	User     string
 	Password string
-	dbname   string
-	sllmode  string
+	Dbname   string
+	Sllmode  string
 }
 
 type Item struct {
@@ -49,7 +49,7 @@ type Delivery struct {
 }
 
 type Order struct {
-	Order_uid          string
+	Order_uid          int
 	Track_number       string
 	Entry              string
 	Delivery           Delivery
@@ -61,7 +61,7 @@ type Order struct {
 	Delivery_service   string
 	Shardkey           string
 	Sm_id              int
-	Date_created       string // time t nonono
+	Date_created       string
 	Oof_shard          string
 }
 

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Order</title>
+</head>
+
+<body>
+    <div>
+        <form method="post">
+            <input type="text", placeholder="Search order by id", name="id">
+            <button >Search</button>
+        </form>
+    </div>
+    <div class="hr">
+        <li>{{ .Order_uid }} </li>
+        <li>{{ .Track_number }}</li>
+        <li>{{ .Entry }}</li>
+        <li>{{ .Locale }}</li>
+        <li>{{ .Internal_signature }}</li>
+        <li>{{ .Customer_id }}</li>
+        <li>{{ .Delivery_service }}</li>
+        <li>{{ .Shardkey }}</li>
+        <li>{{ .Sm_id }}</li>
+        <li>{{ .Date_created }}</li>
+        <li>{{ .Oof_shard }}</li>
+
+
+</html>
