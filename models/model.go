@@ -28,10 +28,10 @@ type Items []Item
 type Payment struct {
 	Transaction   string
 	Request_id    string
-	Currency      string // maybeee int ? 810 = USD
+	Currency      string
 	Provider      string
 	Amount        int
-	Payment_dt    int64 // time t
+	Payment_dt    int64
 	Bank          string
 	Delivery_cost int
 	Goods_total   int
@@ -49,12 +49,12 @@ type Delivery struct {
 }
 
 type Order struct {
-	Order_uid          int
+	Order_uid          string
 	Track_number       string
 	Entry              string
 	Delivery           Delivery
 	Payment            Payment
-	Items              Items
+	Items              Item
 	Locale             string
 	Internal_signature string
 	Customer_id        string

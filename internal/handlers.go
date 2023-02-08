@@ -3,18 +3,13 @@ package internal
 import (
 	"io/ioutil"
 	"log"
-	"strconv"
 
-	"github.com/AlexandrYar/WBLO/parsejson"
+	parsejson "github.com/AlexandrYar/WBLO/parse_json"
 	"github.com/gin-gonic/gin"
 )
 
 func Index(c *gin.Context) {
-	var id int
-	id, err := strconv.Atoi(c.PostForm("id"))
-	if err != nil {
-		log.Println(err)
-	}
+	id := c.PostForm("id")
 	order_info := FindOrderById(Connection(), id)
 	log.Println(order_info, " ", id)
 	c.HTML(200, "index.html", gin.H{
@@ -28,7 +23,7 @@ func Index(c *gin.Context) {
 		"Shardkey":           order_info.Shardkey,
 		"Sm_id":              order_info.Sm_id,
 		"Date_created":       order_info.Date_created,
-		"Oof_shard ":         order_info.Oof_shard,
+		"Oof_shard":          order_info.Oof_shard,
 	})
 }
 
@@ -38,5 +33,6 @@ func Json(c *gin.Context) {
 		log.Println(err)
 	}
 	data_json := parsejson.Parsejson(data)
+	Set(Connection(), data_json)
 	log.Println(data_json)
 }

@@ -33,7 +33,7 @@ func Connection() *sql.DB {
 	return conn
 }
 
-func FindOrderById(conn *sql.DB, id int) model.Order {
+func FindOrderById(conn *sql.DB, id string) model.Order {
 	rows, err := conn.Query(`select "order_uid", "track_number", "entry", "locale", "internal_signature","customer_id","delivery_service","shardkey","sm_id","date_created","oof_shard" from orders where order_uid = $1`, id)
 	if err != nil {
 		log.Println(err)
@@ -48,4 +48,20 @@ func FindOrderById(conn *sql.DB, id int) model.Order {
 		log.Println("some info db:", some_info)
 	}
 	return some_info
+}
+
+func Set(conn *sql.DB, data model.Order) {
+	err := conn.QueryRow(`INSERT INTO orders ("order_uid", "track_number", "entry", "locale", "internal_signature","customer_id","delivery_service","shardkey","sm_id","date_created","oof_shard") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`, data.Order_uid, data.Track_number, data.Entry, data.Locale, data.Internal_signature, data.Customer_id, data.Delivery_service, data.Shardkey, data.Sm_id, data.Date_created, data.Oof_shard)
+	if err != nil {
+		log.Println(err)
+	}
+	err = conn.QueryRow(`INSERT INTO items ("chrt_id", "track_number", "price", "rid", "name", "sale", "size", "total_price", "nm_id", "brand", "status" ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`, data.Items.Chrt_id, data.Track_number, data.Items.Price, data.Items.Rid, data.Items.Name, data.Items.Sale, data.Items.Size, data.Items.Total_price, data.Items.Nm_id, data.Items.Brand, data.Items.Status)
+	if err != nil {
+		log.Println(err)
+	}
+	err = conn.QueryRow(`INSERT INTO payment ( "transaction", "request_id", "currency", "provider", "amount", "paument_dt", "bank","delivery_cost", "goods_total", "custom_fee" ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`, data.Payment.Transaction, data.Payment.Request_id, data.Payment.Currency, data.Payment.Provider, data.Payment.Amount, data.Payment.Payment_dt, data.Payment.Bank, data.Payment.Delivery_cost, data.Payment.Goods_total, data.Payment.Custom_fee)
+	if err != nil {
+		log.Println(err)
+	}
+	log.Println("Пополение базы данных...")
 }
