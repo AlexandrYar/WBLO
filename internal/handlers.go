@@ -1,9 +1,11 @@
 package internal
 
 import (
+	"io/ioutil"
 	"log"
 	"strconv"
 
+	"github.com/AlexandrYar/WBLO/parsejson"
 	"github.com/gin-gonic/gin"
 )
 
@@ -28,4 +30,13 @@ func Index(c *gin.Context) {
 		"Date_created":       order_info.Date_created,
 		"Oof_shard ":         order_info.Oof_shard,
 	})
+}
+
+func Json(c *gin.Context) {
+	data, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil {
+		log.Println(err)
+	}
+	data_json := parsejson.Parsejson(data)
+	log.Println(data_json)
 }
