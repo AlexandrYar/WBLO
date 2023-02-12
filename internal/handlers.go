@@ -1,16 +1,16 @@
-package internal
+package handlers
 
 import (
 	"io/ioutil"
 	"log"
 
-	parsejson "github.com/AlexandrYar/WBLO/parse_json"
+	"github.com/AlexandrYar/WBLO/internal/db"
 	"github.com/gin-gonic/gin"
 )
 
 func Index(c *gin.Context) {
 	id := c.PostForm("id")
-	order_info := FindOrderById(Connection(), id)
+	order_info := db.FindOrderById(db.Connection(), id)
 	log.Println(order_info, " ", id)
 	c.HTML(200, "index.html", gin.H{
 		"Order_uid":          order_info.Order_uid,
@@ -32,7 +32,5 @@ func Json(c *gin.Context) {
 	if err != nil {
 		log.Println(err)
 	}
-	data_json := parsejson.Parsejson(data)
-	Set(Connection(), data_json)
-	log.Println(data_json)
+
 }
