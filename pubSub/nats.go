@@ -1,15 +1,14 @@
-package nats
+package natStreamig
 
 import (
 	"encoding/json"
 	"log"
 
+	"github.com/AlexandrYar/WBLO/internal"
 	model "github.com/AlexandrYar/WBLO/models"
+	parsejson "github.com/AlexandrYar/WBLO/parse_json"
 	"github.com/nats-io/nats.go"
 )
-
-type PubSub struct {
-}
 
 func Pub(order model.Order) {
 	nc, err := nats.Connect(nats.DefaultURL)
@@ -24,6 +23,7 @@ func Pub(order model.Order) {
 	if err := nc.Publish("Order", data); err != nil {
 		log.Panic(err.Error())
 	}
+
 	data_json := parsejson.Parsejson(data)
-	Set(Connection(), data_json)
+	internal.Set(internal.Connection(), data_json)
 }
