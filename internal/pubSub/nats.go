@@ -1,4 +1,4 @@
-package natStreamig
+package sending
 
 import (
 	"encoding/json"
@@ -16,6 +16,7 @@ func Pub(order model.Order) {
 		log.Panic(err.Error())
 	}
 	defer nc.Close()
+
 	data, err := json.Marshal(&order)
 	if err != nil {
 		log.Panic(err.Error())
